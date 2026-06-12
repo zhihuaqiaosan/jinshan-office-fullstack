@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵犀AI（紧凑版）</title>
+    <!-- 引入外部样式 -->
+    <link href="css/prism-tomorrow.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <!-- 引入外部JS库 -->
+    <script src="js/marked.min.js"></script>
+    <script src="js/prism.min.js"></script>
+    <script src="js/prism-javascript.min.js"></script>
+    <script src="js/prism-html.min.js"></script>
+    <script src="js/prism-css.min.js"></script>
+    <script src="js/prism-python.min.js"></script>
+    <script src="js/prism-java.min.js"></script>
+    <script src="js/prism-markdown.min.js"></script>
+</head>
+<body>
+    <!-- 图片预览弹窗 -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- 头部：逐字渐变标题 + 4张彩色图标快捷卡片 -->
+    <div class="chat-header" id="chat-header">
+        <div class="header-title">
+            <span>嗨</span><span>，</span><span>我</span><span>是</span><span>灵</span><span>犀</span>
+        </div>
+        <div class="header-subtitle">我能帮你什么吗？</div>
+        
+        <!-- 快捷提问卡片（4张 + 不同颜色图标） -->
+        <div class="suggest-questions" id="suggest-questions">
+            <div class="suggest-item" onclick="sendSuggestMessage('我是一名前端开发初学者，如何提升相关技能？')">
+                <div class="suggest-text">我是一名前端开发初学者，<br>如何提升相关技能？</div>
+                <div class="suggest-icon icon-1">💻</div>
+            </div>
+            <div class="suggest-item" onclick="sendSuggestMessage('有哪些平价又新颖的生日礼物适合送朋友。')">
+                <div class="suggest-text">有哪些平价又新颖的生日礼物<br>适合送朋友。</div>
+                <div class="suggest-icon icon-2">🎁</div>
+            </div>
+            <div class="suggest-item" onclick="sendSuggestMessage('准备在家里办一个大型家庭聚会，帮我计划。')">
+                <div class="suggest-text">准备在家里办一个大型家庭<br>聚会，帮我计划。</div>
+                <div class="suggest-icon icon-3">🏡</div>
+            </div>
+            <div class="suggest-item" onclick="sendSuggestMessage('带小朋友去野餐，有什么好玩的活动建议吗？')">
+                <div class="suggest-text">带小朋友去野餐，有什么好<br>玩的活动建议吗？</div>
+                <div class="suggest-icon icon-4">🧺</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 聊天内容 -->
+    <div class="chat-content" id="chat-content"></div>
+
+    <!-- 输入区域 -->
+    <div class="chat-input-area">
+        <div class="input-image-preview" id="inputImagePreview"></div>
+        <div class="input-container">
+            <textarea id="message-input" placeholder="有问题尽管问我"></textarea>
+            <div class="input-buttons">
+                <div id="upload-stop-container">
+                    <label class="func-btn" for="file-input">🖼️</label>
+                    <input type="file" id="file-input" accept="image/*">
+                </div>
+                <button class="func-btn" id="theme-btn">🔆</button>
+                <button class="func-btn" id="clear-btn">🗑️</button>
+                <button class="send-btn" id="send-btn">➤</button>
+            </div>
+        </div>
+        <div class="footer-tip">内容由 AI 大模型生成，请仔细甄别</div>
+    </div>
+
+    <!-- 引入自定义JS -->
+    <script src="js/index.js"></script>
+</body>
+</html>
