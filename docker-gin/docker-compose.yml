@@ -1,0 +1,57 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: wordbook-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordbook
+      MYSQL_USER: wordbook_user
+      MYSQL_PASSWORD: wordbook_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docs/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - wordbook-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: wordbook-backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: wordbook_user
+      DB_PASSWORD: wordbook_pass
+      DB_NAME: wordbook
+      JWT_SECRET: your-secret-key-change-this
+      BACKEND_PORT: 8080
+      QWEN_API_KEY: ${QWEN_API_KEY}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - wordbook-net
+
+  frontend:
+    build: ./frontend
+    container_name: wordbook-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - wordbook-net
+    ports:
+      - "80:80"
+
+networks:
+  wordbook-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
